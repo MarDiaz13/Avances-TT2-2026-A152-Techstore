@@ -1,0 +1,132 @@
+html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+}
+
+.help-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #dbeafe;
+    padding: 80px 20px 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+    overflow-y: visible !important;
+}
+
+.back-nav {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #1e3a8a;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.help-header-main {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.help-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.help-title-text {
+    color: #1e3a8a;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.help-subtitle-text {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.faq-list-container {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.faq-row {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.faq-trigger {
+    width: 100%;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1e3a8a;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.faq-content {
+    padding: 0 25px 20px 25px;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.arrow {
+    color: #94a3b8;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+    .arrow.up {
+        transform: rotate(180deg);
+    }
+
+.help-footer-box {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
+}
+
+    .help-footer-box p {
+        margin: 5px 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+.help-mail {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 16px;
+}

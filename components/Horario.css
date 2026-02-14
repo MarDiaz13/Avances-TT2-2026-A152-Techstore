@@ -1,0 +1,22 @@
+.horario-contenedor-principal {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-family: 'Inter', sans-serif;
+}
+
+.horario-seccion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.horario-icono-gris {
+  color: #94a3b8; /* Gris suave para los iconos */
+}
+
+.horario-texto {
+  color: #334155; /* Azul pizarra para el texto */
+  font-size: 15px;
+  font-weight: 500;
+}

@@ -1,0 +1,112 @@
+.pantalla-completa-productos {
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+.ruta-breadcrumb {
+    font-size: 11px;
+    color: #9ca3af;
+    padding: 15px 0;
+    font-family: sans-serif;
+}
+
+.cabecera-inventario {
+    margin-bottom: 25px;
+}
+
+.texto-cabecera h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.texto-cabecera p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.contenedor-tabla-principal {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.tabla-datos-productos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .tabla-datos-productos th {
+        background-color: #f9fafb;
+        padding: 14px 20px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        color: #4b5563;
+        border-bottom: 1px solid #e5e7eb;
+        text-transform: none;
+    }
+
+    .tabla-datos-productos td {
+        padding: 14px 20px;
+        font-size: 14px;
+        border-bottom: 1px solid #f3f4f6;
+        vertical-align: middle;
+    }
+
+.celda-sku {
+    color: #9ca3af;
+}
+
+.celda-titulo {
+    color: #111827;
+    font-weight: 500;
+}
+
+.celda-secundaria {
+    color: #6b7280;
+}
+
+.celda-dinero {
+    color: #111827;
+}
+
+.celda-botones-accion {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.alinear-derecha {
+    text-align: right !important;
+    padding-right: 35px !important;
+}
+
+.accion-edit, .accion-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.accion-edit {
+    color: #3b82f6;
+}
+
+.accion-delete {
+    color: #ef4444;
+}
+
+.pie-techstore {
+    text-align: center;
+    padding: 40px 0;
+    color: #9ca3af;
+    font-size: 12px;
+}

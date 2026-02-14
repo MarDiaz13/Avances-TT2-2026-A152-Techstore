@@ -1,0 +1,129 @@
+/* Contenedor principal con profundidad */
+.banner-aesthetic-container {
+    width: 100%;
+    background: linear-gradient(135deg, #0c215a 0%, #08163d 100%); /* Azul profundo TechStore */
+    color: #ffffff;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Barra superior refinada */
+.banner-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner-left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Badge estilizado en azul uniforme */
+.tt-badge-new {
+    background: #1e40af;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.institution-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Título centrado y elegante */
+.banner-title-area {
+    padding: 12px 40px;
+    text-align: center;
+}
+
+.main-project-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #e2e8f0;
+    max-width: 1000px;
+    margin: 0 auto;
+    letter-spacing: 0.2px;
+}
+
+/* Botón estilo "Glassmorphism" */
+.btn-legal-glass {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 15px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-legal-glass:hover {
+    background: white;
+    color: #0c215a;
+    transform: translateY(-1px);
+}
+
+/* Modal Estetizado */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content-glass {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.ley-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #0c215a;
+    transition: 0.2s;
+}
+
+.ley-card:hover {
+    border-color: #1e40af;
+    background: #eff6ff;
+    transform: scale(1.02);
+}

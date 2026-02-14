@@ -1,0 +1,121 @@
+/* Overlay del Modal */
+.modal-gestion-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(12, 33, 90, 0.85); /* Azul TechStore traslúcido */
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+/* Contenedor del Formulario */
+.modal-gestion-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 450px; /* Corregido para evitar warnings */
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.modal-gestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #6b1c31; /* Guinda IPN */
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-gestion-header h2 {
+    color: #0c215a;
+    margin: 0;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Campos de entrada */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0c215a;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0c215a;
+    box-shadow: 0 0 0 2px rgba(12, 33, 90, 0.1);
+}
+
+/* Botones */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.btn-cancelar {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+    background: #f8fafc;
+}
+
+.btn-confirmar {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #0c215a; /* Azul TechStore */
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+
+.btn-confirmar:hover {
+    opacity: 0.9;
+}
+
+.btn-borrar {
+    background: #dc2626; /* Rojo para eliminación */
+}
+
+.header-borrar {
+    border-bottom-color: #dc2626;
+}
