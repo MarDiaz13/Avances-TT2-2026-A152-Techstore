@@ -19,13 +19,13 @@ const Horario = () => {
       month: 'long', 
       year: 'numeric' 
     };
-    // Formato: Viernes, 16 de enero de 2026
+
     let stringFecha = date.toLocaleDateString('es-MX', opciones);
     return stringFecha.charAt(0).toUpperCase() + stringFecha.slice(1);
   };
 
   const obtenerHoraFormateada = (date) => {
-    // Formato: 17:45:28
+ 
     return date.toLocaleTimeString('es-MX', { 
       hour12: false, 
       hour: '2-digit', 

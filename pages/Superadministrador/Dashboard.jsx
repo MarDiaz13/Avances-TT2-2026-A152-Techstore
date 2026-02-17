@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Users, ClipboardList, BarChart3,
     ShoppingCart, Package, Store, Plus,
@@ -19,6 +19,26 @@ import { SUCURSALES } from '../../components/datosTienda';
 export default function Dashboard({ onLogout }) {
     const [vistaActual, setVistaActual] = useState('dashboard');
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: '', data: null });
+
+    // Estado para la fecha y hora dinámica
+    const [fechaHora, setFechaHora] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setFechaHora(new Date());
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatearFecha = (date) => {
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let fecha = date.toLocaleDateString('es-MX', opciones);
+        return fecha.charAt(0).toUpperCase() + fecha.slice(1);
+    };
+
+    const formatearHora = (date) => {
+        return date.toLocaleTimeString('es-MX', { hour12: false });
+    };
 
     const abrirModal = (tipo, tienda = null) => {
         setModalConfig({ isOpen: true, type: tipo, data: tienda });
@@ -105,11 +125,11 @@ export default function Dashboard({ onLogout }) {
                     <div className="horario-header-flex">
                         <div className="horario-item">
                             <Calendar size={16} />
-                            <span>Sábado, 31 de enero de 2026</span>
+                            <span>{formatearFecha(fechaHora)}</span>
                         </div>
                         <div className="horario-item">
                             <Clock size={16} />
-                            <span>22:22:28</span>
+                            <span>{formatearHora(fechaHora)}</span>
                         </div>
                     </div>
                 </header>
