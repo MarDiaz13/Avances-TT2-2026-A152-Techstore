@@ -1,4 +1,4 @@
-export const PRODUCTOS_DUENO_DATA = [
+export const PRODUCTOS_DATA = [
     { id: '7501055300013', nombre: 'Coca-Cola 600ml', categoria: 'Bebidas', proveedor: 'Coca-Cola FEMSA', costo: 10.00, precio: 15.00, stock: 48, tiendaId: 1 },
     { id: '7501055300020', nombre: 'Sabritas Originales 45g', categoria: 'Botanas', proveedor: 'Sabritas Mexico', costo: 12.00, precio: 18.00, stock: 35, tiendaId: 1 },
     { id: '7501055300037', nombre: 'Ruffles Queso 55g', categoria: 'Botanas', proveedor: 'Sabritas Mexico', costo: 13.00, precio: 20.00, stock: 5, tiendaId: 1 },
