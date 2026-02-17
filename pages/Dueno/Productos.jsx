@@ -1,90 +1,84 @@
-import React, { useState } from 'react';
-import { Edit3, Trash2 } from 'lucide-react';
-import { PRODUCTOS_DUENO_DATA } from '../../components/ListaProductosDueno';
-import ModificacionesProductos from './ModificacionesProductos';
-import './Productos.css';
+import React from 'react';
+import './ModificacionesProductos.css';
 
-export default function Productos() {
-    const [productos] = useState(PRODUCTOS_DUENO_DATA);
-    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: '', data: null });
-
-    const abrirModal = (tipo, producto) => {
-        setModalConfig({
-            isOpen: true,
-            type: tipo,
-            data: {
-                codigo: producto.id,
-                nombre: producto.nombre,
-                cat: producto.categoria,
-                precio: `$${producto.precio.toFixed(2)}`,
-                stock: producto.stock || 0
-            }
-        });
-    };
-
-    const cerrarModal = () => {
-        setModalConfig({ isOpen: false, type: '', data: null });
-    };
-
-    const manejarConfirmacion = (data) => {
-        console.log("Accion confirmada:", data);
-        cerrarModal();
-    };
+export default function ModificacionesProductos({ isOpen, type, data, onClose, onConfirm }) {
+    if (!isOpen) return null;
 
     return (
-        <div className="contenedor-principal-dueno">
-            <section className="seccion-encabezado">
-                <h1>Productos</h1>
-                <p>Gestiona la informacion completa de productos</p>
-            </section>
-
-            <div className="tabla-contenedor-bordes">
-                <table className="tabla-productos-exacta">
-                    <thead>
-                        <tr>
-                            <th>Codigo de Barras</th>
-                            <th>Producto</th>
-                            <th>Categoria</th>
-                            <th>Proveedor</th>
-                            <th>Costo</th>
-                            <th>Precio</th>
-                            <th className="texto-centrado">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {productos.map((prod) => (
-                            <tr key={prod.id}>
-                                <td className="col-sku">{prod.id}</td>
-                                <td className="col-nombre">{prod.nombre}</td>
-                                <td className="col-categoria">{prod.categoria}</td>
-                                <td className="col-proveedor">{prod.proveedor}</td>
-                                <td className="col-precio">${prod.costo.toFixed(2)}</td>
-                                <td className="col-precio">${prod.precio.toFixed(2)}</td>
-                                <td className="col-acciones">
-                                    <button className="accion-edit" onClick={() => abrirModal('editar', prod)}>
-                                        <Edit3 size={18} />
-                                    </button>
-                                    <button className="accion-delete" onClick={() => abrirModal('borrar', prod)}>
-                                        <Trash2 size={18} />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div className="modal-overlay-original">
+            <div className={`modal-content-original ${type === 'borrar' ? 'modal-delete' : 'modal-form'}`}>
+                {type === 'editar' ? (
+                    <div className="form-container-original">
+                        <div className="form-grid-original">
+                            <div className="form-group-original">
+                                <label>Codigo de Barras EAN-13 *</label>
+                                <input type="text" defaultValue={data?.codigo} />
+                            </div>
+                            <div className="form-group-original">
+                                <label>Nombre del Producto *</label>
+                                <input type="text" defaultValue={data?.nombre} placeholder="Ej. Coca-Cola 600ml" />
+                            </div>
+                            <div className="form-group-original">
+                                <label>Categoria *</label>
+                                <select defaultValue={data?.cat || ""}>
+                                    <option value="" disabled>Seleccionar</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Botanas">Botanas</option>
+                                    <option value="Panaderia">Panaderia</option>
+                                    <option value="Lacteos">Lacteos</option>
+                                </select>
+                            </div>
+                            <div className="form-group-original">
+                                <label>Imagen del Producto *</label>
+                                <div className="file-input-wrapper">
+                                    <input type="file" id="file-upload" />
+                                    <label htmlFor="file-upload" className="file-label-btn">Seleccionar archivo</label>
+                                    <span>Sin archi...ccionados</span>
+                                </div>
+                            </div>
+                            <div className="form-group-original">
+                                <label>Costo Unitario *</label>
+                                <input type="number" defaultValue="0.00" />
+                            </div>
+                            <div className="form-group-original">
+                                <label>Precio de Venta *</label>
+                                <input type="number" defaultValue={data?.precio?.replace('$', '') || "0.00"} />
+                            </div>
+                            <div className="form-group-original">
+                                <label>Stock Inicial *</label>
+                                <input type="number" defaultValue={data?.stock || "0"} />
+                            </div>
+                            <div className="form-group-original">
+                                <label>Alerta de Stock Bajo *</label>
+                                <input type="number" defaultValue="10" />
+                            </div>
+                        </div>
+                        <div className="form-group-original full-width">
+                            <label>Descripcion</label>
+                            <textarea placeholder="Breve descripcion del producto..." rows="4"></textarea>
+                        </div>
+                        <div className="modal-actions-original">
+                            <button className="btn-cancel-white" onClick={onClose}>CANCELAR</button>
+                            <button className="btn-submit-blue" onClick={() => onConfirm(data)}>GUARDAR CAMBIOS</button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="delete-container-original">
+                        <h2 className="delete-title-red">Eliminar Producto</h2>
+                        <p className="delete-main-text">
+                            Estas seguro de que deseas eliminar el producto <br />
+                            <strong>{data?.nombre}</strong>?
+                        </p>
+                        <p className="delete-sub-text">
+                            Esta accion no se puede deshacer. Se eliminara permanentemente del inventario.
+                        </p>
+                        <div className="modal-actions-original centered">
+                            <button className="btn-cancel-white" onClick={onClose}>CANCELAR</button>
+                            <button className="btn-delete-red" onClick={() => onConfirm(data)}>SI, ELIMINAR</button>
+                        </div>
+                    </div>
+                )}
             </div>
-
-            <ModificacionesProductos
-                isOpen={modalConfig.isOpen}
-                type={modalConfig.type}
-                data={modalConfig.data}
-                onClose={cerrarModal}
-                onConfirm={manejarConfirmacion}
-            />
-
-            <footer className="footer-replica-original">
-                &copy; 2026 TechStore. Todos los derechos reservados.
-            </footer>
         </div>
     );
 }

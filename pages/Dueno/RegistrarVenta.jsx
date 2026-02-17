@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, Trash2, Plus, Minus, Barcode, ChevronDown, CheckCircle, Camera, StopCircle } from 'lucide-react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import { DATA_PRODUCTOS_INICIAL } from '../../components/ListaProductos';
+import { PRODUCTOS_DUENO_DATA } from '../../components/ListaProductosDueno';
 import './RegistrarVenta.css';
 
 export default function RegistrarVenta({ isOpen, onClose }) {
@@ -14,7 +14,7 @@ export default function RegistrarVenta({ isOpen, onClose }) {
     const [escaneando, setEscaneando] = useState(false);
 
     const agregarAlCarrito = useCallback((id) => {
-        const producto = DATA_PRODUCTOS_INICIAL.find(p => p.id.toString() === id.toString());
+        const producto = PRODUCTOS_DUENO_DATA.find(p => p.id.toString() === id.toString());
 
         if (!producto) {
             console.warn("Producto no encontrado con ID:", id);
@@ -117,13 +117,13 @@ export default function RegistrarVenta({ isOpen, onClose }) {
                         <div className="registro-card">
                             <p className="label-registro">
                                 <Barcode size={14} style={{ marginRight: '8px' }} />
-                                Escanear Código
+                                Escanear Codigo
                             </p>
                             <div className="input-action-row">
                                 <input
                                     type="text"
                                     className="input-barcode"
-                                    placeholder="ID o Código"
+                                    placeholder="ID o Codigo"
                                     value={codigoBarras}
                                     onChange={(e) => setCodigoBarras(e.target.value)}
                                     onKeyPress={(e) => e.key === 'Enter' && handleAgregarPorCodigo()}
@@ -138,14 +138,14 @@ export default function RegistrarVenta({ isOpen, onClose }) {
                                 onClick={() => setEscaneando(!escaneando)}
                             >
                                 {escaneando ? <StopCircle size={16} /> : <Camera size={16} />}
-                                {escaneando ? 'DETENER CÁMARA' : 'ACTIVAR CÁMARA'}
+                                {escaneando ? 'DETENER CAMARA' : 'ACTIVAR CAMARA'}
                             </button>
 
                             {escaneando && <div id="reader" className="scanner-container"></div>}
                         </div>
 
                         <div className="registro-card">
-                            <p className="label-registro">Selección Manual</p>
+                            <p className="label-registro">Seleccion Manual</p>
                             <div className="select-wrapper">
                                 <select
                                     className="select-registro"
@@ -153,7 +153,7 @@ export default function RegistrarVenta({ isOpen, onClose }) {
                                     onChange={(e) => setProductoSeleccionado(e.target.value)}
                                 >
                                     <option value="">Seleccionar producto</option>
-                                    {DATA_PRODUCTOS_INICIAL.map(p => (
+                                    {PRODUCTOS_DUENO_DATA.map(p => (
                                         <option key={p.id} value={p.id}>
                                             {p.nombre} - ${p.precio.toFixed(2)}
                                         </option>
@@ -202,7 +202,7 @@ export default function RegistrarVenta({ isOpen, onClose }) {
                         </div>
 
                         <div className="cart-footer">
-                            <p className="label-registro">Método de Pago</p>
+                            <p className="label-registro">Metodo de Pago</p>
                             <div className="select-wrapper" style={{ marginBottom: '15px' }}>
                                 <select
                                     className="select-registro-small"

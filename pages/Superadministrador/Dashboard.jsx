@@ -20,7 +20,6 @@ export default function Dashboard({ onLogout }) {
     const [vistaActual, setVistaActual] = useState('dashboard');
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: '', data: null });
 
-    // Estado para la fecha y hora dinámica
     const [fechaHora, setFechaHora] = useState(new Date());
 
     useEffect(() => {
@@ -51,13 +50,23 @@ export default function Dashboard({ onLogout }) {
     return (
         <div className="dashboard-container">
             <aside className="sidebar-new">
-                <div className="sidebar-header-new">
-                    <div className="logo-container-white">
-                        <img src={logoEmpresa} alt="Logo" className="sidebar-logo-img" />
+                <div className="sidebar-header-new" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '15px' }}>
+                    <div className="logo-container-white" style={{
+                        width: '50px',
+                        height: '50px',
+                        backgroundColor: 'white',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        padding: '2px'
+                    }}>
+                        <img src={logoEmpresa} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </div>
                     <div className="header-text-new">
-                        <h1 className="brand-name">TECHSTORE</h1>
-                        <p className="admin-subtitle">Admin Principal</p>
+                        <h1 className="brand-name" style={{ fontSize: '1.1rem', margin: 0 }}>TECHSTORE</h1>
+                        <p className="admin-subtitle" style={{ margin: 0, fontSize: '0.85rem' }}>Admin Principal</p>
                     </div>
                 </div>
 
@@ -112,7 +121,7 @@ export default function Dashboard({ onLogout }) {
                     </div>
                     <button className="btn-logout-red" onClick={onLogout}>
                         <LogOut size={18} />
-                        <span>Cerrar Sesión</span>
+                        <span>Cerrar Sesion</span>
                     </button>
                 </div>
             </aside>
@@ -146,7 +155,7 @@ export default function Dashboard({ onLogout }) {
 
                             <div className="management-card">
                                 <div className="card-header">
-                                    <h3 className="section-subtitle">Gestión de Sucursales</h3>
+                                    <h3 className="section-subtitle">Gestion de Sucursales</h3>
                                 </div>
                                 <div className="store-list">
                                     {SUCURSALES.map(tienda => (
@@ -155,7 +164,7 @@ export default function Dashboard({ onLogout }) {
                                                 <div className="store-icon-bg"><Store size={20} color="#0038a8" /></div>
                                                 <div>
                                                     <p className="store-title-name" style={{ fontWeight: '700', color: '#1e293b' }}>{tienda.nombre}</p>
-                                                    <p className="store-subtitle" style={{ fontSize: '13px', color: '#64748b' }}>{tienda.ubicación}</p>
+                                                    <p className="store-subtitle" style={{ fontSize: '13px', color: '#64748b' }}>{tienda.ubicacion}</p>
                                                 </div>
                                             </div>
                                             <div className="action-btns-container">

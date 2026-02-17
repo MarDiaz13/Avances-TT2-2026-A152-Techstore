@@ -30,8 +30,8 @@ const productosDemanda = [
     { id: 1, nombre: 'Coca-Cola 600ml', cat: 'Bebidas', precio: '$15.00' },
     { id: 2, nombre: 'Sabritas Originales 45g', cat: 'Botanas', precio: '$18.00' },
     { id: 3, nombre: 'Takis Fuego 62g', cat: 'Botanas', precio: '$18.00' },
-    { id: 4, nombre: 'Bimbo Pan Blanco Grande', cat: 'Panadería', precio: '$38.00' },
-    { id: 5, nombre: 'Leche Lala Entera 1L', cat: 'Lácteos', precio: '$22.00' }
+    { id: 4, nombre: 'Bimbo Pan Blanco Grande', cat: 'Panaderia', precio: '$38.00' },
+    { id: 5, nombre: 'Leche Lala Entera 1L', cat: 'Lacteos', precio: '$22.00' }
 ];
 
 export default function Dashboard({ onLogout }) {
@@ -58,13 +58,23 @@ export default function Dashboard({ onLogout }) {
     return (
         <div className="dashboard-container">
             <aside className="sidebar-new">
-                <div className="sidebar-header-new">
-                    <div className="logo-container-white">
-                        <img src={logoEmpresa} alt="Logo" className="sidebar-logo-img" />
+                <div className="sidebar-header-new" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '15px' }}>
+                    <div className="logo-container-white" style={{
+                        width: '50px',
+                        height: '50px',
+                        backgroundColor: 'white',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        padding: '2px'
+                    }}>
+                        <img src={logoEmpresa} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </div>
                     <div className="header-text-new">
-                        <h1 className="brand-name">TECHSTORE</h1>
-                        <p className="admin-subtitle">Carlos López</p>
+                        <h1 className="brand-name" style={{ fontSize: '1.1rem', margin: 0 }}>TECHSTORE</h1>
+                        <p className="admin-subtitle" style={{ margin: 0, fontSize: '0.85rem' }}>Carlos Lopez</p>
                     </div>
                 </div>
 
@@ -98,7 +108,7 @@ export default function Dashboard({ onLogout }) {
                         <strong className="role-name">Dueño</strong>
                     </div>
                     <button className="btn-logout-red" onClick={onLogout}>
-                        <LogOut size={18} /> <span>Cerrar Sesión</span>
+                        <LogOut size={18} /> <span>Cerrar Sesion</span>
                     </button>
                 </div>
             </aside>
@@ -131,7 +141,7 @@ export default function Dashboard({ onLogout }) {
                             </div>
 
                             <div className="stats-container">
-                                <StatCard title="Ventas del Día" value="$0.2K" sub="↑ +10% desde ayer" icon={<DollarSign size={20} color="#3b82f6" />} />
+                                <StatCard title="Ventas del Dia" value="$0.2K" sub="↑ +10% desde ayer" icon={<DollarSign size={20} color="#3b82f6" />} />
                                 <StatCard title="Utilidad Total" value="$0.2K" sub="↑ +5% desde ayer" icon={<TrendingUp size={20} color="#ef4444" />} />
                                 <StatCard title="Margen de Ganancia" value="$0.2K" sub="↑ Margen 30%" icon={<TrendingUp size={20} color="#10b981" />} />
                                 <StatCard title="Productos en Stock" value="315" sub="125 disponibles" icon={<Package size={20} color="#8b5cf6" />} />
