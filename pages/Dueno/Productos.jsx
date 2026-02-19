@@ -1,84 +1,116 @@
-import React from 'react';
-import './ModificacionesProductos.css';
+import React, { useState } from 'react';
+import { Edit, Trash2, Search } from 'lucide-react';
+import ModificacionesProductos from './ModificacionesProductos';
+import { PRODUCTOS_DUENO_DATA } from '../../components/ListaProductosDueno';
+import './Productos.css';
 
-export default function ModificacionesProductos({ isOpen, type, data, onClose, onConfirm }) {
-    if (!isOpen) return null;
+export default function Productos() {
+    const [productos] = useState(PRODUCTOS_DUENO_DATA);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: null, data: null });
+    const [notificacion, setNotificacion] = useState({ visible: false, texto: '', tipo: '' });
+
+    const mostrarAlerta = (texto, tipo) => {
+        setNotificacion({ visible: true, texto, tipo });
+        setTimeout(() => setNotificacion({ visible: false, texto: '', tipo: '' }), 3000);
+    };
+
+    const abrirModal = (type, data = null) => {
+        setModalConfig({ isOpen: true, type, data });
+    };
+
+    const cerrarModal = () => {
+        setModalConfig({ isOpen: false, type: null, data: null });
+        mostrarAlerta("Accion cancelada por el usuario", "info");
+    };
+
+    const manejarConfirmacion = (data) => {
+        setModalConfig({ isOpen: false, type: null, data: null });
+        const texto = modalConfig.type === 'borrar'
+            ? "Producto eliminado correctamente"
+            : "Producto modificado con exito";
+        mostrarAlerta(texto, "success");
+    };
+
+    const productosFiltrados = productos.filter(p =>
+        p.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.id.includes(searchTerm)
+    );
 
     return (
-        <div className="modal-overlay-original">
-            <div className={`modal-content-original ${type === 'borrar' ? 'modal-delete' : 'modal-form'}`}>
-                {type === 'editar' ? (
-                    <div className="form-container-original">
-                        <div className="form-grid-original">
-                            <div className="form-group-original">
-                                <label>Codigo de Barras EAN-13 *</label>
-                                <input type="text" defaultValue={data?.codigo} />
-                            </div>
-                            <div className="form-group-original">
-                                <label>Nombre del Producto *</label>
-                                <input type="text" defaultValue={data?.nombre} placeholder="Ej. Coca-Cola 600ml" />
-                            </div>
-                            <div className="form-group-original">
-                                <label>Categoria *</label>
-                                <select defaultValue={data?.cat || ""}>
-                                    <option value="" disabled>Seleccionar</option>
-                                    <option value="Bebidas">Bebidas</option>
-                                    <option value="Botanas">Botanas</option>
-                                    <option value="Panaderia">Panaderia</option>
-                                    <option value="Lacteos">Lacteos</option>
-                                </select>
-                            </div>
-                            <div className="form-group-original">
-                                <label>Imagen del Producto *</label>
-                                <div className="file-input-wrapper">
-                                    <input type="file" id="file-upload" />
-                                    <label htmlFor="file-upload" className="file-label-btn">Seleccionar archivo</label>
-                                    <span>Sin archi...ccionados</span>
-                                </div>
-                            </div>
-                            <div className="form-group-original">
-                                <label>Costo Unitario *</label>
-                                <input type="number" defaultValue="0.00" />
-                            </div>
-                            <div className="form-group-original">
-                                <label>Precio de Venta *</label>
-                                <input type="number" defaultValue={data?.precio?.replace('$', '') || "0.00"} />
-                            </div>
-                            <div className="form-group-original">
-                                <label>Stock Inicial *</label>
-                                <input type="number" defaultValue={data?.stock || "0"} />
-                            </div>
-                            <div className="form-group-original">
-                                <label>Alerta de Stock Bajo *</label>
-                                <input type="number" defaultValue="10" />
-                            </div>
-                        </div>
-                        <div className="form-group-original full-width">
-                            <label>Descripcion</label>
-                            <textarea placeholder="Breve descripcion del producto..." rows="4"></textarea>
-                        </div>
-                        <div className="modal-actions-original">
-                            <button className="btn-cancel-white" onClick={onClose}>CANCELAR</button>
-                            <button className="btn-submit-blue" onClick={() => onConfirm(data)}>GUARDAR CAMBIOS</button>
-                        </div>
+        <div className="productos-container-view">
+            {notificacion.visible && (
+                <div className={`alerta-flotante-original ${notificacion.tipo}`}>
+                    {notificacion.texto}
+                </div>
+            )}
+
+            <header className="productos-header">
+                <div className="header-title-section">
+                    <h2 className="title-text">Productos</h2>
+                    <p className="subtitle-text">Gestiona la informacion completa de productos</p>
+                </div>
+            </header>
+
+            <div className="table-wrapper-card">
+                <div className="table-controls">
+                    <div className="search-box">
+                        <Search size={18} className="search-icon" />
+                        <input
+                            type="text"
+                            placeholder="Buscar por codigo o nombre..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                     </div>
-                ) : (
-                    <div className="delete-container-original">
-                        <h2 className="delete-title-red">Eliminar Producto</h2>
-                        <p className="delete-main-text">
-                            Estas seguro de que deseas eliminar el producto <br />
-                            <strong>{data?.nombre}</strong>?
-                        </p>
-                        <p className="delete-sub-text">
-                            Esta accion no se puede deshacer. Se eliminara permanentemente del inventario.
-                        </p>
-                        <div className="modal-actions-original centered">
-                            <button className="btn-cancel-white" onClick={onClose}>CANCELAR</button>
-                            <button className="btn-delete-red" onClick={() => onConfirm(data)}>SI, ELIMINAR</button>
-                        </div>
-                    </div>
-                )}
+                </div>
+
+                <div className="table-scroll">
+                    <table className="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Codigo de Barras</th>
+                                <th>Producto</th>
+                                <th>Categoria</th>
+                                <th>Proveedor</th>
+                                <th>Costo</th>
+                                <th>Precio</th>
+                                <th style={{ textAlign: 'center' }}>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {productosFiltrados.map((prod) => (
+                                <tr key={prod.id}>
+                                    <td className="code-text">{prod.id}</td>
+                                    <td className="product-name-cell">{prod.nombre}</td>
+                                    <td><span className="category-tag">{prod.categoria}</span></td>
+                                    <td className="provider-text">{prod.proveedor}</td>
+                                    <td className="price-text">${prod.costo.toFixed(2)}</td>
+                                    <td className="price-text highlight">${prod.precio.toFixed(2)}</td>
+                                    <td>
+                                        <div className="action-buttons">
+                                            <button className="btn-icon edit" onClick={() => abrirModal('editar', prod)}>
+                                                <Edit size={16} color="#3b82f6" />
+                                            </button>
+                                            <button className="btn-icon delete" onClick={() => abrirModal('borrar', prod)}>
+                                                <Trash2 size={16} color="#ef4444" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <ModificacionesProductos
+                isOpen={modalConfig.isOpen}
+                type={modalConfig.type}
+                data={modalConfig.data}
+                onClose={cerrarModal}
+                onConfirm={manejarConfirmacion}
+            />
         </div>
     );
 }

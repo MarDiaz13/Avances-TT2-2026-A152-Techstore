@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, QrCode, ReceiptText, Calendar, Clock } from 'lucide-react';
+import { Plus, QrCode, ReceiptText } from 'lucide-react';
 import HistorialVentas from '../../components/HistorialVentas';
 import VerQR from './VerQR';
 import CorteCaja from './CorteCaja';
@@ -16,10 +16,6 @@ export default function Ventas() {
             <header className="barra-superior-dash">
                 <div className="ruta-actual">
                     INICIO {'>'} Ventas
-                </div>
-                <div className="info-fecha-hora">
-                    <span className="item-fechahora"><Calendar size={14} /> Domingo, 15 de febrero de 2026</span>
-                    <span className="item-fechahora"><Clock size={14} /> 21:35:00</span>
                 </div>
             </header>
 
@@ -61,10 +57,6 @@ export default function Ventas() {
             <VerQR isOpen={isQrOpen} onClose={() => setIsQrOpen(false)} />
             <CorteCaja isOpen={isCorteOpen} onClose={() => setIsCorteOpen(false)} />
             <RegistrarVenta isOpen={isRegistrarOpen} onClose={() => setIsRegistrarOpen(false)} />
-
-            <footer className="footer-replica-original">
-                &copy; 2026 TechStore. Todos los derechos reservados.
-            </footer>
         </div>
     );
 }

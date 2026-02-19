@@ -19,7 +19,6 @@ import { SUCURSALES } from '../../components/datosTienda';
 export default function Dashboard({ onLogout }) {
     const [vistaActual, setVistaActual] = useState('dashboard');
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: '', data: null });
-
     const [fechaHora, setFechaHora] = useState(new Date());
 
     useEffect(() => {
@@ -45,6 +44,11 @@ export default function Dashboard({ onLogout }) {
 
     const cerrarModal = () => {
         setModalConfig({ isOpen: false, type: '', data: null });
+    };
+
+    const handleConfirm = (formData) => {
+        console.log("Acción:", modalConfig.type, "Datos:", formData);
+        cerrarModal();
     };
 
     return (
@@ -163,8 +167,11 @@ export default function Dashboard({ onLogout }) {
                                             <div className="store-info-flex" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                                                 <div className="store-icon-bg"><Store size={20} color="#0038a8" /></div>
                                                 <div>
-                                                    <p className="store-title-name" style={{ fontWeight: '700', color: '#1e293b' }}>{tienda.nombre}</p>
-                                                    <p className="store-subtitle" style={{ fontSize: '13px', color: '#64748b' }}>{tienda.ubicacion}</p>
+                                                    <p className="store-title-name" style={{ fontWeight: '700', color: '#1e293b', margin: 0 }}>{tienda.nombre}</p>
+                                                    <p className="store-subtitle" style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>{tienda.ubicación}</p>
+                                                    <p className="store-responsible" style={{ fontSize: '12px', color: '#3b82f6', fontWeight: '600', marginTop: '2px' }}>
+                                                        Encargado: {tienda.encargado}
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="action-btns-container">
@@ -199,6 +206,7 @@ export default function Dashboard({ onLogout }) {
                 type={modalConfig.type}
                 data={modalConfig.data}
                 onClose={cerrarModal}
+                onConfirm={handleConfirm}
             />
         </div>
     );
