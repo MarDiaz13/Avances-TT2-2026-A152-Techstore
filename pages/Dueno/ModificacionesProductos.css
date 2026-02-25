@@ -110,6 +110,28 @@
         box-sizing: border-box;
     }
 
+.file-box-final {
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    background: #f8fafc;
+    transition: background 0.2s;
+}
+
+    .file-box-final:hover {
+        background: #f1f5f9;
+    }
+
+.label-file {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 14px;
+}
+
 .full-width {
     grid-column: span 2;
 }

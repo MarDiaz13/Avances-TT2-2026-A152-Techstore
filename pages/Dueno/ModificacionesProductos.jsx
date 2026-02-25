@@ -1,10 +1,11 @@
 ﻿/* eslint-disable unicode-bom */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { X, Upload } from 'lucide-react';
 import './ModificacionesProductos.css';
 
 export default function ModificacionesProductos({ isOpen, type, data, onClose, onConfirm }) {
     const [view, setView] = useState('main');
+    const fileInputRef = useRef(null);
 
     if (!isOpen) return null;
 
@@ -26,6 +27,17 @@ export default function ModificacionesProductos({ isOpen, type, data, onClose, o
     const handleClose = () => {
         setView('main');
         onClose();
+    };
+
+    const handleFileClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            console.log("Archivo seleccionado:", file.name);
+        }
     };
 
     return (
@@ -61,8 +73,17 @@ export default function ModificacionesProductos({ isOpen, type, data, onClose, o
                             </div>
                             <div className="field-group">
                                 <label>Imagen del Producto *</label>
-                                <div className="file-box-final">
-                                    <label className="label-file"><Upload size={16} /> Seleccionar archivo</label>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                />
+                                <div className="file-box-final" onClick={handleFileClick} style={{ cursor: 'pointer' }}>
+                                    <label className="label-file" style={{ cursor: 'pointer' }}>
+                                        <Upload size={16} /> Seleccionar archivo
+                                    </label>
                                 </div>
                             </div>
                             <div className="field-group">

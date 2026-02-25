@@ -79,6 +79,17 @@
     padding: 15px;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-img-display {
+    max-width: 180px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    display: block;
 }
 
 .bank-details-card {

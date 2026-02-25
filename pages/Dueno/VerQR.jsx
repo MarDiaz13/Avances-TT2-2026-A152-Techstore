@@ -11,8 +11,8 @@ export default function VerQR({ isOpen, onClose }) {
 
     return (
         <>
-            <div className="modal-overlay">
-                <div className="modal-qr-content">
+            <div className="modal-overlay" onClick={onClose}>
+                <div className="modal-qr-content" onClick={(e) => e.stopPropagation()}>
                     <header className="modal-qr-header">
                         <h2 className="modal-qr-title">QR para Transferencias</h2>
                         <div className="header-actions">
