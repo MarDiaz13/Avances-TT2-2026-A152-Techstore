@@ -29,3 +29,11 @@ export const VENTAS_HISTORICO = [
     { name: 'May', ingresos: 22000, utilidad: 7500 },
     { name: 'Jun', ingresos: 30000, utilidad: 11000 }
 ];
+
+export const VENTAS_POR_CATEGORIA_REPORTES = [
+    { nombre: 'Bebidas', cantidad: 450, ventas: 6750, porcentaje: 24.2 },
+    { nombre: 'Botanas', cantidad: 320, ventas: 5760, porcentaje: 17.2 },
+    { nombre: 'Panaderia', cantidad: 600, ventas: 9000, porcentaje: 32.3 },
+    { nombre: 'Lacteos', cantidad: 280, ventas: 6160, porcentaje: 15.1 },
+    { nombre: 'Galletas', cantidad: 210, ventas: 5040, porcentaje: 11.2 }
+];

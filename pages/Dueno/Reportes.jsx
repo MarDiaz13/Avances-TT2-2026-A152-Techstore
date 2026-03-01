@@ -1,207 +1,180 @@
 ﻿import React, { useState, useMemo } from 'react';
 import {
     Download, TrendingUp, DollarSign, ShoppingBag,
-    FileText, Loader2, Calendar
+    FileText, Calendar
 } from 'lucide-react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    BarChart, Bar, Legend
+    BarChart, Bar
 } from 'recharts';
 
-import { PRODUCTOS_DUENO_DATA, VENTAS_HISTORICO } from '../../components/ListaProductosDueno';
+import {
+    PRODUCTOS_DUENO_DATA,
+    VENTAS_HISTORICO,
+    VENTAS_POR_CATEGORIA_REPORTES
+} from '../../components/ListaProductosDueno';
 
 export default function Reportes() {
     const [showModal, setShowModal] = useState(false);
-    const [isDownloading, setIsDownloading] = useState(false);
 
-    const stats = useMemo(() => {
-        if (!PRODUCTOS_DUENO_DATA || PRODUCTOS_DUENO_DATA.length === 0) {
-            return { porCategoria: [] };
-        }
-
-        const conteo = PRODUCTOS_DUENO_DATA.reduce((acc, prod) => {
-            const catRaw = prod.categoria || 'Sin Categoria';
-            const cat = catRaw.trim();
-
-            if (!acc[cat]) {
-                acc[cat] = { nombre: cat, cantidad: 0, ingresos: 0 };
-            }
-
-            acc[cat].cantidad += 1;
-            acc[cat].ingresos += (prod.precio || 0) * 5;
-            return acc;
-        }, {});
-
-        const listaCategorias = Object.values(conteo);
-        const totalIngresos = listaCategorias.reduce((sum, c) => sum + c.ingresos, 0);
-
+    const totales = useMemo(() => {
+        const ingresos = VENTAS_POR_CATEGORIA_REPORTES.reduce((sum, item) => sum + item.ventas, 0);
+        const cantidad = VENTAS_POR_CATEGORIA_REPORTES.reduce((sum, item) => sum + item.cantidad, 0);
         return {
-            porCategoria: listaCategorias.map(c => ({
-                ...c,
-                porcentaje: totalIngresos > 0 ? ((c.ingresos / totalIngresos) * 100).toFixed(1) : "0.0"
-            }))
+            ingresos,
+            cantidad,
+            reportes: 24
         };
     }, []);
 
-    const handlePDF = () => {
-        setIsDownloading(true);
-        setShowModal(true);
-        setTimeout(() => setIsDownloading(false), 2000);
-    };
-
     return (
-        <div className="reportes-view-wrapper fade-in">
+        <div className="reportes-view-container" style={{ backgroundColor: '#f8fafc', padding: '30px', minHeight: '100vh' }}>
             {showModal && (
-                <div className="mod-overlay">
-                    <div className="modal-descarga-exito">
-                        {isDownloading ? (
-                            <div className="mod-loading">
-                                <Loader2 size={40} className="animate-spin" color="#28a745" />
-                                <p style={{ marginTop: '15px' }}>Generando PDF...</p>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="icon-success-circle"><Download size={35} color="#fff" /></div>
-                                <h2 className="success-title">¡Descarga Exitosa!</h2>
-                                <p>El reporte PDF se ha descargado correctamente</p>
-                                <button className="btn-modal-aceptar" onClick={() => setShowModal(false)}>ACEPTAR</button>
-                            </>
-                        )}
+                <div className="mod-overlay" style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+                    <div className="modal-content" style={{ backgroundColor: 'white', padding: '40px', borderRadius: '16px', textAlign: 'center', maxWidth: '400px' }}>
+                        <div style={{ backgroundColor: '#28a745', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                            <Download size={30} color="#fff" />
+                        </div>
+                        <h2 style={{ color: '#28a745', marginBottom: '10px' }}>Descarga Exitosa!</h2>
+                        <p style={{ color: '#64748b', marginBottom: '25px' }}>El reporte PDF se ha generado correctamente.</p>
+                        <button className="btn-aceptar" style={{ backgroundColor: '#28a745', color: 'white', padding: '10px 30px', border: 'none', borderRadius: '8px', cursor: 'pointer' }} onClick={() => setShowModal(false)}>
+                            ACEPTAR
+                        </button>
                     </div>
                 </div>
             )}
 
-            <header className="header-view">
-                <h1 className="main-title">Reportes</h1>
-                <p className="main-subtitle">Visualiza, genera y descarga reportes del sistema</p>
+            <header style={{ marginBottom: '30px' }}>
+                <h1 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b' }}>Reportes</h1>
+                <p style={{ color: '#64748b' }}>Visualiza, genera y descarga reportes del sistema</p>
             </header>
 
-            <div className="table-white-card filtros-reporte-card">
-                <h4 className="card-inner-title">Filtros de Reporte</h4>
-                <div className="filtros-grid">
-                    <div className="filter-item">
-                        <label>Fecha Inicial</label>
-                        <input type="date" className="input-report" defaultValue="2026-02-28" />
+            <section className="filtros-card" style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '30px' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '20px', color: '#334155' }}>Filtros de Reporte</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', alignItems: 'flex-end' }}>
+                    <div className="filter-group">
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#64748b', marginBottom: '8px' }}>FECHA INICIAL</label>
+                        <input type="date" style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '8px' }} defaultValue="2026-02-28" />
                     </div>
-                    <div className="filter-item">
-                        <label>Fecha Final</label>
-                        <input type="date" className="input-report" placeholder="dd/mm/aaaa" />
+                    <div className="filter-group">
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#64748b', marginBottom: '8px' }}>FECHA FINAL</label>
+                        <input type="date" style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
                     </div>
-                    <div className="filter-item">
-                        <label>Tipo de Reporte</label>
-                        <select className="input-report">
-                            <option>Seleccionar tipo</option>
+                    <div className="filter-group">
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#64748b', marginBottom: '8px' }}>TIPO DE REPORTE</label>
+                        <select style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
                             <option>Ventas Totales</option>
                         </select>
                     </div>
-                    <div className="report-actions-btns">
-                        <button className="btn-generate-report"><Calendar size={18} /> GENERAR REPORTE</button>
-                        <button className="btn-pdf" onClick={handlePDF}><Download size={18} /> DESCARGAR PDF</button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button style={{ backgroundColor: '#3b82f6', color: 'white', padding: '10px 15px', border: 'none', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', fontSize: '13px' }}>
+                            <Calendar size={18} /> GENERAR REPORTE
+                        </button>
+                        <button onClick={() => setShowModal(true)} style={{ backgroundColor: '#10b981', color: 'white', padding: '10px 15px', border: 'none', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', fontSize: '13px' }}>
+                            <Download size={18} /> DESCARGAR PDF
+                        </button>
                     </div>
+                </div>
+            </section>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '30px' }}>
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                        <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '8px' }}>Ingresos Totales</p>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>${totales.ingresos.toLocaleString()}</h2>
+                        <span style={{ color: '#10b981', fontSize: '12px', fontWeight: '600' }}>+15% desde el mes pasado</span>
+                    </div>
+                    <div style={{ color: '#10b981' }}><DollarSign size={28} /></div>
+                </div>
+
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                        <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '8px' }}>Utilidad Total</p>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>${(totales.ingresos * 0.35).toLocaleString()}</h2>
+                        <span style={{ color: '#10b981', fontSize: '12px', fontWeight: '600' }}>+8% desde el mes pasado</span>
+                    </div>
+                    <div style={{ color: '#3b82f6' }}><TrendingUp size={28} /></div>
+                </div>
+
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                        <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '8px' }}>Productos Vendidos</p>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>{totales.cantidad}</h2>
+                        <span style={{ color: '#10b981', fontSize: '12px', fontWeight: '600' }}>+12% desde el mes pasado</span>
+                    </div>
+                    <div style={{ color: '#8b5cf6' }}><ShoppingBag size={28} /></div>
+                </div>
+
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                        <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '8px' }}>Reportes Generados</p>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>{totales.reportes}</h2>
+                        <span style={{ color: '#64748b', fontSize: '12px' }}>Este mes</span>
+                    </div>
+                    <div style={{ color: '#f59e0b' }}><FileText size={28} /></div>
                 </div>
             </div>
 
-            <div className="stats-cards-row">
-                <div className="stat-card-item">
-                    <div className="stat-content">
-                        <span className="stat-label">Ingresos Totales</span>
-                        <h2 className="stat-number">$123,000</h2>
-                        <span className="stat-trend positive">↑ +15% desde el mes pasado</span>
-                    </div>
-                    <div className="stat-icon-circle no-bg"><DollarSign size={24} color="#22c55e" /></div>
-                </div>
-                <div className="stat-card-item">
-                    <div className="stat-content">
-                        <span className="stat-label">Utilidad Total</span>
-                        <h2 className="stat-number">$43,400</h2>
-                        <span className="stat-trend positive">↑ +8% desde el mes pasado</span>
-                    </div>
-                    <div className="stat-icon-circle no-bg"><TrendingUp size={24} color="#3b82f6" /></div>
-                </div>
-                <div className="stat-card-item">
-                    <div className="stat-content">
-                        <span className="stat-label">Productos Vendidos</span>
-                        <h2 className="stat-number">1,700</h2>
-                        <span className="stat-trend positive">↑ +12% desde el mes pasado</span>
-                    </div>
-                    <div className="stat-icon-circle no-bg"><ShoppingBag size={24} color="#8b5cf6" /></div>
-                </div>
-                <div className="stat-card-item">
-                    <div className="stat-content">
-                        <span className="stat-label">Reportes Generados</span>
-                        <h2 className="stat-number">24</h2>
-                        <span className="stat-label">Este mes</span>
-                    </div>
-                    <div className="stat-icon-circle no-bg"><FileText size={24} color="#f59e0b" /></div>
-                </div>
-            </div>
-
-            <div className="charts-main-grid">
-                <div className="table-white-card chart-container">
-                    <h4 className="card-inner-title">Ingresos y Utilidad Mensual</h4>
-                    <p className="chart-subtitle">Evolucion de ingresos y utilidad de los ultimos 6 meses</p>
-                    <div style={{ width: '100%', height: 320 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '20px', marginBottom: '30px' }}>
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '20px' }}>Ingresos y Utilidad Mensual</h3>
+                    <div style={{ width: '100%', height: '300px' }}>
                         <ResponsiveContainer>
-                            <LineChart data={VENTAS_HISTORICO} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                            <LineChart data={VENTAS_HISTORICO}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} dy={10} />
-                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} ticks={[0, 7500, 15000, 22500, 30000]} domain={[0, 30000]} dx={-10} />
-                                <Tooltip />
-                                <Legend verticalAlign="bottom" align="center" iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
-                                <Line type="monotone" dataKey="ingresos" name="Ingresos" stroke="#22c55e" strokeWidth={2.5} dot={{ r: 5, fill: '#fff', stroke: '#22c55e', strokeWidth: 2 }} activeDot={{ r: 7 }} />
-                                <Line type="monotone" dataKey="utilidad" name="Utilidad" stroke="#3b82f6" strokeWidth={2.5} dot={{ r: 5, fill: '#fff', stroke: '#3b82f6', strokeWidth: 2 }} activeDot={{ r: 7 }} />
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} />
+                                <Line type="monotone" dataKey="ingresos" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981' }} activeDot={{ r: 6 }} />
+                                <Line type="monotone" dataKey="utilidad" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, fill: '#3b82f6' }} activeDot={{ r: 6 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                <div className="table-white-card chart-container">
-                    <h4 className="card-inner-title">Ventas por Categoria</h4>
-                    <p className="chart-subtitle">Distribucion de productos vendidos por categoria de tiendita</p>
-                    <div style={{ width: '100%', height: 320 }}>
+                <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '20px' }}>Ventas por Categoria</h3>
+                    <div style={{ width: '100%', height: '300px' }}>
                         <ResponsiveContainer>
-                            <BarChart data={stats.porCategoria} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                            <BarChart data={VENTAS_POR_CATEGORIA_REPORTES}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                <XAxis dataKey="nombre" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} dy={10} />
-                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} />
+                                <XAxis dataKey="nombre" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                                 <Tooltip cursor={{ fill: '#f8fafc' }} />
-                                <Legend verticalAlign="bottom" align="center" iconType="square" wrapperStyle={{ paddingTop: '20px' }} />
-                                <Bar dataKey="cantidad" name="Cantidad Vendida" fill="#007bff" radius={[4, 4, 0, 0]} barSize={50} />
+                                <Bar dataKey="cantidad" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
             </div>
 
-            <div className="table-white-card" style={{ marginTop: '25px', padding: '25px' }}>
-                <h4 className="card-inner-title" style={{ marginBottom: '25px' }}>Detalles por Categoria</h4>
+            <section style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+                <div style={{ padding: '20px 24px', borderBottom: '1px solid #f1f5f9' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: '700' }}>Detalles por Categoria</h3>
+                </div>
                 <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                         <thead>
-                            <tr style={{ borderBottom: '1.5px solid #f3f4f6' }}>
-                                <th style={{ padding: '15px 10px', color: '#111827', fontWeight: '600', textAlign: 'left' }}>Categoria</th>
-                                <th style={{ padding: '15px 10px', color: '#111827', fontWeight: '600', textAlign: 'right' }}>Cantidad Vendida</th>
-                                <th style={{ padding: '15px 10px', color: '#111827', fontWeight: '600', textAlign: 'right' }}>Ventas Totales</th>
-                                <th style={{ padding: '15px 10px', color: '#111827', fontWeight: '600', textAlign: 'right' }}>% del Total</th>
+                            <tr style={{ backgroundColor: '#f8fafc' }}>
+                                <th style={{ padding: '16px 24px', fontSize: '13px', fontWeight: '700', color: '#475569' }}>Categoria</th>
+                                <th style={{ padding: '16px 24px', fontSize: '13px', fontWeight: '700', color: '#475569', textAlign: 'center' }}>Cantidad Vendida</th>
+                                <th style={{ padding: '16px 24px', fontSize: '13px', fontWeight: '700', color: '#475569', textAlign: 'right' }}>Ventas Totales</th>
+                                <th style={{ padding: '16px 24px', fontSize: '13px', fontWeight: '700', color: '#475569', textAlign: 'right' }}>% del Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {stats.porCategoria.map((item, index) => (
-                                <tr key={index} style={{ borderBottom: '1px solid #f9fafb' }}>
-                                    <td style={{ padding: '18px 10px', color: '#374151' }}>{item.nombre}</td>
-                                    <td style={{ padding: '18px 10px', color: '#6b7280', textAlign: 'right' }}>{item.cantidad}</td>
-                                    <td style={{ padding: '18px 10px', color: '#10b981', fontWeight: '600', textAlign: 'right' }}>
-                                        ${item.ingresos.toLocaleString()}
-                                    </td>
-                                    <td style={{ padding: '18px 10px', color: '#3b82f6', fontWeight: '500', textAlign: 'right' }}>
-                                        {item.porcentaje}%
-                                    </td>
+                            {VENTAS_POR_CATEGORIA_REPORTES.map((item, index) => (
+                                <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                    <td style={{ padding: '16px 24px', fontSize: '14px', color: '#1e293b', fontWeight: '500' }}>{item.nombre}</td>
+                                    <td style={{ padding: '16px 24px', fontSize: '14px', color: '#64748b', textAlign: 'center' }}>{item.cantidad}</td>
+                                    <td style={{ padding: '16px 24px', fontSize: '14px', color: '#10b981', fontWeight: '600', textAlign: 'right' }}>${item.ventas.toLocaleString()}</td>
+                                    <td style={{ padding: '16px 24px', fontSize: '14px', color: '#3b82f6', fontWeight: '600', textAlign: 'right' }}>{item.porcentaje}%</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
         </div>
     );
 }
