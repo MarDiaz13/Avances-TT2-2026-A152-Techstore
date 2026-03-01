@@ -15,15 +15,20 @@ export default function Reportes() {
     const [isDownloading, setIsDownloading] = useState(false);
 
     const stats = useMemo(() => {
-        if (!PRODUCTOS_DUENO_DATA) return { porCategoria: [] };
+        if (!PRODUCTOS_DUENO_DATA || PRODUCTOS_DUENO_DATA.length === 0) {
+            return { porCategoria: [] };
+        }
 
         const conteo = PRODUCTOS_DUENO_DATA.reduce((acc, prod) => {
-            const cat = prod.categoria;
+            const catRaw = prod.categoria || 'Sin Categoria';
+            const cat = catRaw.trim();
+
             if (!acc[cat]) {
                 acc[cat] = { nombre: cat, cantidad: 0, ingresos: 0 };
             }
+
             acc[cat].cantidad += 1;
-            acc[cat].ingresos += prod.precio * 5;
+            acc[cat].ingresos += (prod.precio || 0) * 5;
             return acc;
         }, {});
 
@@ -158,7 +163,7 @@ export default function Reportes() {
                             <BarChart data={stats.porCategoria} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis dataKey="nombre" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} dy={10} />
-                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} ticks={[0, 150, 300, 450, 600]} domain={[0, 600]} dx={-10} />
+                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 14 }} />
                                 <Tooltip cursor={{ fill: '#f8fafc' }} />
                                 <Legend verticalAlign="bottom" align="center" iconType="square" wrapperStyle={{ paddingTop: '20px' }} />
                                 <Bar dataKey="cantidad" name="Cantidad Vendida" fill="#007bff" radius={[4, 4, 0, 0]} barSize={50} />
