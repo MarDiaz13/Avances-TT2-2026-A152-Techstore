@@ -50,9 +50,9 @@
     transition: background 0.2s;
 }
 
-.store-item-row:hover {
-    background-color: #f9fafb;
-}
+    .store-item-row:hover {
+        background-color: #f9fafb;
+    }
 
 .store-info-flex {
     display: flex;
@@ -137,7 +137,7 @@
 }
 
 .btn-pdf {
-    background: #ef4444;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px 16px;
@@ -201,9 +201,17 @@
     justify-content: center;
 }
 
-.blue-bg { background-color: #eff6ff; }
-.green-bg { background-color: #ecfdf5; }
-.yellow-bg { background-color: #fffbeb; }
+.blue-bg {
+    background-color: #eff6ff;
+}
+
+.green-bg {
+    background-color: #ecfdf5;
+}
+
+.yellow-bg {
+    background-color: #fffbeb;
+}
 
 .charts-main-grid {
     display: grid;
@@ -227,55 +235,74 @@
 
 .mod-container {
     background: white;
-    width: 400px;
     border-radius: 16px;
-    padding: 25px;
     box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
 }
 
-.mod-header {
+.modal-descarga-exito {
+    width: 420px;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.mod-content-area-descarga {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+}
+
+.icon-success-circle {
+    background-color: #28a745;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
-.mod-title {
-    font-size: 18px;
+.success-title {
+    color: #28a745;
+    font-size: 26px;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 10px 0;
 }
 
-.btn-mod-close {
-    background: none;
+.success-msg {
+    color: #4b5563;
+    font-size: 16px;
+    margin: 0 0 25px 0;
+}
+
+.btn-modal-aceptar {
+    background-color: #28a745;
+    color: white;
     border: none;
-    color: #9ca3af;
+    padding: 12px 50px;
+    border-radius: 8px;
+    font-weight: 700;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-.mod-loading, .mod-success {
+    .btn-modal-aceptar:hover {
+        background-color: #218838;
+    }
+
+.mod-loading {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
 }
 
-.mod-loading p, .mod-success p {
-    margin-top: 15px;
-    color: #4b5563;
-    font-weight: 500;
-}
-
-.btn-mod-primary {
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 20px;
-    cursor: pointer;
-}
+    .mod-loading p {
+        margin-top: 15px;
+        color: #4b5563;
+        font-weight: 500;
+    }
 
 .animate-spin {
     animation: spin 1s linear infinite;
@@ -283,8 +310,13 @@
 }
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .fade-in {
@@ -292,6 +324,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -10,6 +10,8 @@ import {
 import logoEmpresa from '../../logo.jpg';
 import Productos from './Productos';
 import Ventas from './Ventas';
+import Inventario from './Inventario';
+import Reportes from './Reportes';
 import './Dashboard.css';
 
 const dataIngresos = [
@@ -60,21 +62,15 @@ export default function Dashboard({ onLogout }) {
             <aside className="sidebar-new">
                 <div className="sidebar-header-new" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '15px' }}>
                     <div className="logo-container-white" style={{
-                        width: '50px',
-                        height: '50px',
-                        backgroundColor: 'white',
-                        borderRadius: '8px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        overflow: 'hidden',
-                        padding: '2px'
+                        width: '50px', height: '50px', backgroundColor: 'white',
+                        borderRadius: '8px', display: 'flex', alignItems: 'center',
+                        justifyContent: 'center', overflow: 'hidden', padding: '2px'
                     }}>
                         <img src={logoEmpresa} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </div>
                     <div className="header-text-new">
                         <h1 className="brand-name" style={{ fontSize: '1.1rem', margin: 0 }}>TECHSTORE</h1>
-                        <p className="admin-subtitle" style={{ margin: 0, fontSize: '0.85rem' }}>Carlos Lopez</p>
+                        <p className="admin-subtitle" style={{ margin: 0, fontSize: '0.85rem' }}>Dueño</p>
                     </div>
                 </div>
 
@@ -103,12 +99,8 @@ export default function Dashboard({ onLogout }) {
                 </nav>
 
                 <div className="sidebar-footer-new">
-                    <div className="role-indicator">
-                        <p className="role-label">ROL ACTUAL</p>
-                        <strong className="role-name">Dueño</strong>
-                    </div>
                     <button className="btn-logout-red" onClick={onLogout}>
-                        <LogOut size={18} /> <span>Cerrar Sesion</span>
+                        <LogOut size={18} /> <span>Cerrar Sesión</span>
                     </button>
                 </div>
             </aside>
@@ -136,7 +128,7 @@ export default function Dashboard({ onLogout }) {
                             <div className="alert-stock-bajo">
                                 <AlertCircle size={18} color="#b45309" />
                                 <span>
-                                    <strong>Aviso de Stock Bajo:</strong> Sabritas Originales 45g (8 unidades), Leche Lala Entera 1L (5 unidades), Doritos Nacho 62g (1 unidades)
+                                    <strong>Aviso de Stock Bajo:</strong> Sabritas Originales 45g (8 unidades), Leche Lala Entera 1L (5 unidades)
                                 </span>
                             </div>
 
@@ -155,7 +147,7 @@ export default function Dashboard({ onLogout }) {
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                             <XAxis dataKey="name" axisLine={false} tickLine={false} />
                                             <YAxis axisLine={false} tickLine={false} />
-                                            <Tooltip cursor={{ fill: '#f8fafc' }} />
+                                            <Tooltip />
                                             <Bar dataKey="Ingresos" fill="#2eb85c" radius={[4, 4, 0, 0]} barSize={35} />
                                         </BarChart>
                                     </ResponsiveContainer>
@@ -195,13 +187,12 @@ export default function Dashboard({ onLogout }) {
                             </div>
                         </div>
                     )}
-                    {vistaActual === 'productos' && <div className="fade-in"><Productos /></div>}
-                    {vistaActual === 'ventas' && <div className="fade-in"><Ventas /></div>}
+                    {vistaActual === 'productos' && <Productos />}
+                    {vistaActual === 'ventas' && <Ventas />}
+                    {vistaActual === 'inventario' && <Inventario />}
+                    {vistaActual === 'reportes' && <Reportes />}
                 </div>
-
-                <footer className="main-footer">
-                    © 2026 TechStore. Todos los derechos reservados.
-                </footer>
+                <footer className="main-footer">© 2026 TechStore. Todos los derechos reservados.</footer>
             </main>
         </div>
     );
