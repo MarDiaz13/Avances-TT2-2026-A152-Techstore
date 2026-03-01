@@ -20,3 +20,12 @@ export const PRODUCTOS_DUENO_DATA = [
     { id: '7501055300181', nombre: 'Chips Jalapeno 45g', categoria: 'Botanas', proveedor: 'Barcel', costo: 10.00, precio: 15.00 },
     { id: '7501055300198', nombre: 'Yogurt Lala Fresa 1L', categoria: 'Lacteos', proveedor: 'Grupo Lala', costo: 18.00, precio: 25.00 }
 ];
+
+export const VENTAS_HISTORICO = [
+    { name: 'Ene', ingresos: 12000, utilidad: 4000 },
+    { name: 'Feb', ingresos: 18500, utilidad: 6200 },
+    { name: 'Mar', ingresos: 15000, utilidad: 5000 },
+    { name: 'Abr', ingresos: 25000, utilidad: 8800 },
+    { name: 'May', ingresos: 22000, utilidad: 7500 },
+    { name: 'Jun', ingresos: 30000, utilidad: 11000 }
+];
