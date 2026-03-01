@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Store, ChevronRight, ArrowLeft, Download,
-    TrendingUp, DollarSign, ShoppingBag, Loader2
+    TrendingUp, DollarSign, ShoppingBag, Loader2, FileCheck
 } from 'lucide-react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -21,52 +21,98 @@ import './Reportes.css';
 export default function Reportes() {
     const [tiendaSeleccionada, setTiendaSeleccionada] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [modalTipo, setModalTipo] = useState('');
-    const [mensajeExito, setMensajeExito] = useState('');
     const [filtroTipo, setFiltroTipo] = useState('General');
+
+    const [modalConfig, setModalConfig] = useState({
+        tipo: '',
+        titulo: '',
+        mensaje: '',
+        icono: null,
+        color: '#3b82f6'
+    });
 
     const { ejecutarConsultaBD, procesarDescargaPDF } = useGenerarReportes();
 
+    const datosFiltrados = useMemo(() => {
+        if (filtroTipo === 'General') return DATA_CATEGORIAS;
+        return DATA_CATEGORIAS.filter(item => item.nombre === filtroTipo);
+    }, [filtroTipo]);
+
+    const statsFiltradas = useMemo(() => {
+        if (filtroTipo === 'General') return ESTADISTICAS_GENERALES;
+        const cat = DATA_CATEGORIAS.find(item => item.nombre === filtroTipo);
+        return {
+            ventasTotales: cat ? cat.ventas : 0,
+            ganancias: cat ? cat.ganancias : 0,
+            productosVendidos: cat ? cat.cantidad : 0
+        };
+    }, [filtroTipo]);
+
     const handleGenerar = async () => {
-        setModalTipo('procesando');
+        setModalConfig({
+            tipo: 'procesando',
+            titulo: 'PROCESANDO...',
+            mensaje: 'Generando vista previa del reporte...',
+            icono: null,
+            color: '#3b82f6'
+        });
         setShowModal(true);
-        await ejecutarConsultaBD({ tienda: tiendaSeleccionada.nombre, tipo: filtroTipo });
-        setMensajeExito('El reporte se ha generado correctamente');
-        setModalTipo('exito');
+        await ejecutarConsultaBD({ tienda: tiendaSeleccionada?.nombre, tipo: filtroTipo });
+        setModalConfig({
+            tipo: 'exito',
+            titulo: '¡Reporte Generado!',
+            mensaje: `El reporte de ${filtroTipo} se ha procesado correctamente.`,
+            icono: <FileCheck size={32} color="#fff" />,
+            color: '#3b82f6'
+        });
     };
 
     const handlePDF = async () => {
-        setModalTipo('procesando');
+        setModalConfig({
+            tipo: 'procesando',
+            titulo: 'GENERANDO PDF...',
+            mensaje: 'Preparando archivo para descarga...',
+            icono: null,
+            color: '#10b981'
+        });
         setShowModal(true);
-        await procesarDescargaPDF(tiendaSeleccionada.nombre);
-        setMensajeExito('El reporte PDF se ha descargado correctamente');
-        setModalTipo('exito');
+        await procesarDescargaPDF(tiendaSeleccionada?.nombre);
+        setModalConfig({
+            tipo: 'exito',
+            titulo: '¡Descarga Exitosa!',
+            mensaje: `El archivo PDF de ${filtroTipo} se ha guardado en tu equipo.`,
+            icono: <Download size={32} color="#fff" />,
+            color: '#10b981'
+        });
     };
 
     return (
         <div className="reportes-view-wrapper fade-in">
             {showModal && (
-                <div className="mod-overlay">
-                    <div className="mod-container modal-descarga-exito fade-in">
-                        <div className="mod-content-area-descarga">
-                            {modalTipo === 'procesando' ? (
-                                <div className="mod-loading">
-                                    <Loader2 size={50} className="animate-spin" />
-                                    <p>Procesando solicitud...</p>
+                <div className="mod-overlay" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="mod-container modal-descarga-exito fade-in" style={{ padding: '40px', borderRadius: '20px', textAlign: 'center' }}>
+                        {modalConfig.tipo === 'procesando' ? (
+                            <div className="mod-loading">
+                                <Loader2 size={50} className="animate-spin" style={{ color: modalConfig.color, marginBottom: '15px' }} />
+                                <h2 style={{ fontWeight: '800' }}>{modalConfig.titulo}</h2>
+                                <p>{modalConfig.mensaje}</p>
+                            </div>
+                        ) : (
+                            <div className="mod-success-container">
+                                <div className="icon-success-circle" style={{ backgroundColor: modalConfig.color, width: '70px', height: '70px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                                    {modalConfig.icono}
                                 </div>
-                            ) : (
-                                <div className="mod-success-container">
-                                    <div className="icon-success-circle">
-                                        <Download size={32} color="#ffffff" />
-                                    </div>
-                                    <h2 className="success-title">¡Descarga Exitosa!</h2>
-                                    <p className="success-msg">{mensajeExito}</p>
-                                    <button className="btn-modal-aceptar" onClick={() => setShowModal(false)}>
-                                        ACEPTAR
-                                    </button>
-                                </div>
-                            )}
-                        </div>
+                                <h2 className="success-title" style={{ color: modalConfig.color, fontWeight: '800' }}>{modalConfig.titulo}</h2>
+                                <p className="success-msg" style={{ margin: '15px 0 25px' }}>{modalConfig.mensaje}</p>
+                                <button
+                                    className="btn-modal-aceptar"
+                                    style={{ backgroundColor: modalConfig.color, border: 'none', padding: '12px 50px', borderRadius: '10px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    ACEPTAR
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
@@ -103,7 +149,6 @@ export default function Reportes() {
                                 <ArrowLeft size={16} /> Volver a sucursales
                             </button>
                             <h1 className="main-title">Reportes: {tiendaSeleccionada.nombre}</h1>
-                            <p className="main-subtitle">Mostrando reporte tipo: <strong>{filtroTipo}</strong></p>
                         </header>
 
                         <div className="table-white-card filtros-reporte-card shadow-sm">
@@ -127,6 +172,7 @@ export default function Reportes() {
                                         <option value="General">General</option>
                                         <option value="Ventas">Ventas</option>
                                         <option value="Inventario">Inventario</option>
+                                        <option value="Por Categorías">Por Categorías</option>
                                     </select>
                                 </div>
                                 <div className="report-actions-btns">
@@ -139,22 +185,22 @@ export default function Reportes() {
                         <div className="stats-cards-row fade-in">
                             <div className="stat-card-item">
                                 <div className="stat-info-text">
-                                    <p className="stat-label">Ingresos Totales</p>
-                                    <h2 className="stat-number">${ESTADISTICAS_GENERALES.ventasTotales.toLocaleString()}</h2>
+                                    <p className="stat-label">Ingresos ({filtroTipo})</p>
+                                    <h2 className="stat-number">${statsFiltradas.ventasTotales.toLocaleString()}</h2>
                                 </div>
                                 <div className="stat-icon-circle blue-bg"><DollarSign size={22} color="#3b82f6" /></div>
                             </div>
                             <div className="stat-card-item">
                                 <div className="stat-info-text">
-                                    <p className="stat-label">Utilidad Total</p>
-                                    <h2 className="stat-number">${ESTADISTICAS_GENERALES.ganancias.toLocaleString()}</h2>
+                                    <p className="stat-label">Utilidad</p>
+                                    <h2 className="stat-number">${statsFiltradas.ganancias.toLocaleString()}</h2>
                                 </div>
                                 <div className="stat-icon-circle green-bg"><TrendingUp size={22} color="#10b981" /></div>
                             </div>
                             <div className="stat-card-item">
                                 <div className="stat-info-text">
-                                    <p className="stat-label">Productos Vendidos</p>
-                                    <h2 className="stat-number">{ESTADISTICAS_GENERALES.productosVendidos.toLocaleString()}</h2>
+                                    <p className="stat-label">Productos</p>
+                                    <h2 className="stat-number">{statsFiltradas.productosVendidos.toLocaleString()}</h2>
                                 </div>
                                 <div className="stat-icon-circle yellow-bg"><ShoppingBag size={22} color="#f59e0b" /></div>
                             </div>
@@ -178,15 +224,15 @@ export default function Reportes() {
                             </div>
 
                             <div className="table-white-card chart-container shadow-sm fade-in">
-                                <h4 className="card-inner-title">Ventas por Categoría</h4>
+                                <h4 className="card-inner-title">Análisis: {filtroTipo}</h4>
                                 <div style={{ width: '100%', height: 300, marginTop: '20px' }}>
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart data={DATA_CATEGORIAS}>
+                                        <BarChart data={datosFiltrados}>
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                             <XAxis dataKey="nombre" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                                             <YAxis axisLine={false} tickLine={false} />
                                             <Tooltip cursor={{ fill: 'transparent' }} />
-                                            <Bar dataKey="cantidad" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
+                                            <Bar dataKey="cantidad" fill={modalConfig.color} radius={[4, 4, 0, 0]} barSize={40} />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 </div>
