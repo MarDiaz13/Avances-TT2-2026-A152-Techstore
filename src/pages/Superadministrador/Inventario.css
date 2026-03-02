@@ -1,0 +1,61 @@
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.info-blue {
+  background-color: #eef6ff;
+  border: 1px solid #3b82f6;
+  color: #1e40af;
+}
+
+.warning-yellow {
+  background-color: #fffbeb;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+.card-inner-title {
+  padding: 20px 25px;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th {
+  padding: 15px 25px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.inventory-table td {
+  padding: 15px 25px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.prod-name { font-weight: 600; color: #1e293b; }
+.prod-sku { font-size: 11px; color: #94a3b8; }
+
+.profit-tag {
+  color: #10b981;
+  font-weight: 700;
+  background: #ecfdf5;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+.badge-status.stock-bajo {
+  background-color: #f59e0b;
+}

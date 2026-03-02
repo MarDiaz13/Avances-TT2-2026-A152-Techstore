@@ -1,0 +1,224 @@
+.usuarios-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: relative;
+}
+
+.usuarios-content-area {
+  flex: 1;
+  padding-bottom: 40px; /* Espacio para el footer */
+}
+
+/* HEADER Y TITULOS */
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.main-subtitle {
+  color: #64748b;
+  font-size: 14px;
+  margin: 5px 0 0 0;
+}
+
+/* BOTONES */
+.btn-primary-add {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary-add:hover {
+  background-color: #2563eb;
+}
+
+.btn-back-stores {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.btn-back-stores:hover {
+  text-decoration: underline;
+}
+
+/* CONTENEDOR BLANCO (TABLA Y LISTA) */
+.table-white-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ESTILOS DE LA LISTA DE SUCURSALES */
+.store-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.store-item-row:hover {
+  background-color: #f8fafc;
+}
+
+.store-item-row:last-child {
+  border-bottom: none;
+}
+
+.store-icon-bg {
+  background: #eff6ff;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.store-info-flex {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.store-title-name {
+  font-weight: 700;
+  margin: 0;
+  color: #334155;
+  font-size: 15px;
+}
+
+.store-subtitle {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 2px 0 0 0;
+}
+
+.text-view-users {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-right: 10px;
+}
+
+/* ESTILOS DE LA TABLA DE USUARIOS */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.users-table th {
+  background-color: #f8fafc;
+  padding: 15px 25px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.users-table td {
+  padding: 15px 25px;
+  font-size: 14px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-gray {
+  color: #64748b;
+}
+
+/* BADGES DE ROLES Y ESTADOS */
+.badge-rol, .badge-status {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  display: inline-block;
+}
+
+.badge-rol.dueño { background-color: #3b82f6; }
+.badge-rol.empleado { background-color: #10b981; }
+.badge-rol.cliente { background-color: #64748b; }
+
+.badge-status.activo { background-color: #10b981; }
+.badge-status.inactivo { background-color: #ef4444; }
+
+/* ICONOS DE ACCIÓN */
+.action-icons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.icon-edit, .icon-delete {
+  padding: 7px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.icon-edit { background-color: #eff6ff; color: #3b82f6; }
+.icon-edit:hover { background-color: #dbeafe; }
+
+.icon-delete { background-color: #fef2f2; color: #ef4444; }
+.icon-delete:hover { background-color: #fee2e2; }
+
+/* FOOTER (Estilo imagen 2) */
+.footer-copyright-fixed {
+  width: 100%;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: auto;
+}
+
+/* ANIMACIÓN */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

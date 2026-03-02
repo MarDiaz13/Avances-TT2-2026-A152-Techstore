@@ -1,0 +1,130 @@
+.inventario-view-container {
+    padding: 20px;
+    background-color: transparent;
+}
+
+.inv-header-titles {
+    margin-bottom: 25px;
+}
+
+.inv-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.inv-subtitle {
+    color: #64748b;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.inv-alert-info {
+    background-color: #f0f7ff;
+    border: 1px solid #1e40af;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+}
+
+.inv-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.inv-info-icon-circle {
+    background-color: #1e40af;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inv-search-section {
+    margin-bottom: 30px;
+}
+
+.inv-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+    .inv-search-wrapper input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 16px;
+        color: #475569;
+        margin-left: 12px;
+    }
+
+.inv-main-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+}
+
+    .inv-main-table th {
+        text-align: left;
+        padding: 15px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #475569;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .inv-main-table td {
+        padding: 15px;
+        font-size: 14px;
+        color: #1e293b;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+.inv-prod-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.inv-prod-name {
+    font-weight: 600;
+}
+
+.inv-prod-id {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.inv-text-profit {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.inv-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.inv-badge-ok {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.inv-badge-low {
+    background-color: #fef3c7;
+    color: #92400e;
+}
