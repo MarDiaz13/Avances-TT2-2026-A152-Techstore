@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const VENTAS_DATA_BASE = [
     {
         id: '#VENTA-001',
@@ -8,6 +6,8 @@ export const VENTAS_DATA_BASE = [
         utilidad: 32.40,
         metodo: 'Efectivo',
         tipo: 'Ventas',
+        origen: 'Online',
+        estado: 'Pendiente',
         productos: 'Coca-Cola 600ml x3 = $45.00, Sabritas Originales 45g x2 = $36.00'
     },
     {
@@ -17,6 +17,8 @@ export const VENTAS_DATA_BASE = [
         utilidad: 41.00,
         metodo: 'Transferencia',
         tipo: 'Inventario',
+        origen: 'Tienda',
+        estado: 'Completado',
         productos: 'Bimbo Pan Blanco Grande x1 = $38.00, Leche Lala Entera 1L x2 = $44.00'
     },
     {
@@ -26,6 +28,8 @@ export const VENTAS_DATA_BASE = [
         utilidad: 51.00,
         metodo: 'Efectivo',
         tipo: 'Ventas',
+        origen: 'Online',
+        estado: 'En Preparación',
         productos: 'Takis Fuego 62g x4 = $72.00, Agua Ciel 600ml x3 = $30.00'
     },
     {
@@ -35,6 +39,8 @@ export const VENTAS_DATA_BASE = [
         utilidad: 26.00,
         metodo: 'Transferencia',
         tipo: 'General',
+        origen: 'Tienda',
+        estado: 'Completado',
         productos: 'Doritos Nacho 62g x2 = $38.00, Pepsi 600ml x2 = $27.00'
     },
     {
@@ -44,6 +50,8 @@ export const VENTAS_DATA_BASE = [
         utilidad: 30.00,
         metodo: 'Efectivo',
         tipo: 'Ventas',
+        origen: 'Online',
+        estado: 'Listo',
         productos: 'Gansito Marinela x5 = $60.00, Coca-Cola 600ml x1 = $15.00'
     },
     {
@@ -53,56 +61,52 @@ export const VENTAS_DATA_BASE = [
         utilidad: 38.40,
         metodo: 'Efectivo',
         tipo: 'Inventario',
+        origen: 'Tienda',
+        estado: 'Completado',
         productos: 'Ruffles Queso 55g x3 = $60.00, Sabritas Originales 45g x2 = $36.00'
+    },
+    {
+        id: '#VENTA-007',
+        fecha: '2024-11-17 09:10',
+        total: 120.00,
+        utilidad: 48.00,
+        metodo: 'Transferencia',
+        tipo: 'Ventas',
+        origen: 'Online',
+        estado: 'Pendiente',
+        productos: 'Aceite Nutrioli 1L x2 = $76.00, Arroz Verde Valle 1kg x2 = $44.00'
+    },
+    {
+        id: '#VENTA-008',
+        fecha: '2024-11-17 10:45',
+        total: 45.50,
+        utilidad: 18.20,
+        metodo: 'Efectivo',
+        tipo: 'Ventas',
+        origen: 'Tienda',
+        estado: 'Completado',
+        productos: 'Paleta Payaso x2 = $26.00, Kinder Sorpresa x1 = $19.50'
+    },
+    {
+        id: '#VENTA-009',
+        fecha: '2024-11-17 11:30',
+        total: 210.00,
+        utilidad: 84.00,
+        metodo: 'Transferencia',
+        tipo: 'General',
+        origen: 'Online',
+        estado: 'Cancelado',
+        productos: 'Pañal Huggies Etapa 3 x1 = $180.00, Toallitas Húmedas x1 = $30.00'
+    },
+    {
+        id: '#VENTA-010',
+        fecha: '2024-11-17 13:00',
+        total: 58.00,
+        utilidad: 23.20,
+        metodo: 'Efectivo',
+        tipo: 'Ventas',
+        origen: 'Tienda',
+        estado: 'Completado',
+        productos: 'Cerveza Victoria 355ml x3 = $54.00, Limones 250g x1 = $4.00'
     }
 ];
-
-export default function HistorialVentasDueno() {
-    return (
-        <div className="table-card shadow-sm" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px' }}>
-            <h3 className="history-title" style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px', color: '#1e293b' }}>
-                Historial de Ventas
-            </h3>
-            <div className="sales-stack" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {VENTAS_DATA_BASE.map((venta) => (
-                    <div key={venta.id} className="sale-card-item" style={{ border: '1px solid #f1f5f9', borderRadius: '12px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                        <div className="sale-info-col">
-                            <span className="sale-id-text" style={{ fontWeight: '700', color: '#3b82f6', marginBottom: '4px', display: 'block' }}>
-                                {venta.id}
-                            </span>
-                            <span className="sale-date-text" style={{ fontSize: '13px', color: '#64748b', display: 'block', marginBottom: '12px' }}>
-                                {venta.fecha}
-                            </span>
-                            <div className="products-section">
-                                <p className="products-label" style={{ fontSize: '13px', fontWeight: '700', color: '#475569', margin: '0 0 4px 0' }}>Productos:</p>
-                                <ul style={{ paddingLeft: '18px', margin: '0', listStyleType: 'disc', color: '#64748b', fontSize: '13px' }}>
-                                    {venta.productos.split(',').map((prod, index) => (
-                                        <li key={index} className="product-line" style={{ marginBottom: '2px' }}>
-                                            {prod.trim()}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="sale-price-col" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-                            <span className={`method-badge-new ${venta.metodo.toLowerCase()}`} style={{
-                                padding: '4px 12px',
-                                borderRadius: '20px',
-                                fontSize: '11px',
-                                fontWeight: '700',
-                                backgroundColor: venta.metodo === 'Efectivo' ? '#dcfce7' : '#dbeafe',
-                                color: venta.metodo === 'Efectivo' ? '#166534' : '#1e40af'
-                            }}>
-                                {venta.metodo.toUpperCase()}
-                            </span>
-                            <span className="sale-total-blue" style={{ fontSize: '18px', fontWeight: '800', color: '#3b82f6' }}>
-                                ${venta.total.toFixed(2)}
-                            </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
